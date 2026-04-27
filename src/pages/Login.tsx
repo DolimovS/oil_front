@@ -1,11 +1,11 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import { toast } from 'sonner';
 import { motion } from 'motion/react';
 import { Car, Lock, User, Loader2 } from 'lucide-react';
-
+import { Eye, EyeOff } from 'lucide-react';
 
 
 const Login: React.FC = () => {
@@ -15,25 +15,28 @@ const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const response = await api.post('/auth/login', { username, password });
+  const [showPassword, setShowPassword] = useState(false);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsLoading(true);
 
-console.log(response.data);
-    try {
-      const response = await api.post('/auth/login', { username, password });
-      login(response.data.token);
-      toast.success('Xush kelibsiz!');
-      navigate('/');
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Login yoki parol xato');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  try {
+    const response = await api.post('/auth/login', {
+      username,
+      password,
+    });
 
-  
+    login(response.data.token);
+    toast.success('Xush kelibsiz!');
+    navigate('/');
+  } catch (error: any) {
+    toast.error(error.response?.data?.message || 'Login yoki parol xato');
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4 bg-slate-50 dark:bg-slate-950">
@@ -83,15 +86,25 @@ console.log(response.data);
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                 <Lock size={18} />
               </div>
+
               <input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-slate-900 dark:text-white"
+                className="block w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-slate-900 dark:text-white"
                 placeholder="••••••••"
               />
+
+              {/* Eye icon button */}
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
 
@@ -107,9 +120,15 @@ console.log(response.data);
           </button>
         </form>
 
-        <div className="text-center">
+        <div className="text-center  mt-6 space-y-2">
           <p className="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-widest font-medium">
             Premium Car Care Management
+          </p>
+          <a href="tel:+998932590908" className="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 text-sm font-medium">
+            Admin bilan bog‘lanish
+          </a>
+          <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">
+            © 2026 OilTrack Usta. Barcha huquqlar himoyalangan.
           </p>
         </div>
       </motion.div>
