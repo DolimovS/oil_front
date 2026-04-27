@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://72.56.38.31:5000/api';
+const API_BASE_URL = 'https://api.dolimov.uz/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
