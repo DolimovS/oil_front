@@ -125,7 +125,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             Premium Car Care Management
           </p>
           <a href="tel:+998932590908" className="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 text-sm font-medium">
-            Admin bilan bog‘lanish
+            Admin bilan bog‘lanish:+998932590908
           </a>
           <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">
             © 2026 OilTrack Usta. Barcha huquqlar himoyalangan.
